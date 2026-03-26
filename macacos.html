@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Los Macacos 🐒</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;700;900&display=swap');
+
+    :root {
+      --jungle: #2d6a4f;
+      --banana: #f4d03f;
+      --bark: #6b4226;
+      --leaf: #52b788;
+      --cream: #fefae0;
+      --shadow: rgba(0,0,0,0.15);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background-color: #1a3a2a;
+      background-image:
+        radial-gradient(circle at 20% 50%, rgba(82,183,136,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(244,208,63,0.06) 0%, transparent 40%);
+      color: #fefae0;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Floating leaves */
+    .leaf-bg {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .leaf-bg span {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0.06;
+      animation: drift linear infinite;
+    }
+
+    @keyframes drift {
+      0% { transform: translateY(-60px) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.06; }
+      90% { opacity: 0.06; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 4rem;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      padding: 3rem 0 2rem;
+    }
+
+    .monkey-row {
+      font-size: 3.5rem;
+      letter-spacing: 0.4rem;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    h1 {
+      font-family: 'Bangers', cursive;
+      font-size: clamp(4rem, 12vw, 7rem);
+      letter-spacing: 0.15em;
+      color: var(--banana);
+      text-shadow: 4px 4px 0 var(--bark), 6px 6px 0 rgba(0,0,0,0.3);
+      line-height: 1;
+      margin: 0.5rem 0;
+    }
+
+    .tagline {
+      font-size: 1.1rem;
+      opacity: 0.75;
+      font-style: italic;
+      margin-top: 0.5rem;
+      color: var(--leaf);
+    }
+
+    /* Warning banner */
+    .banner {
+      background: var(--banana);
+      color: #1a3a2a;
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      margin: 1.5rem 0 2.5rem;
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      box-shadow: 0 4px 16px var(--shadow);
+      animation: wiggle 4s ease-in-out infinite;
+    }
+
+    @keyframes wiggle {
+      0%, 90%, 100% { transform: rotate(0deg); }
+      93% { transform: rotate(-1.5deg); }
+      96% { transform: rotate(1.5deg); }
+    }
+
+    .banner .icon { font-size: 1.5rem; flex-shrink: 0; }
+
+    /* Member cards grid */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 1.75rem;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: default;
+    }
+
+    .card:hover {
+      transform: translateY(-6px) rotate(-0.5deg);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      border-radius: 20px 20px 0 0;
+    }
+
+    .card.german::before  { background: linear-gradient(90deg, #e74c3c, #e91e63); }
+    .card.kenneth::before { background: linear-gradient(90deg, #3498db, #9b59b6); }
+    .card.sergio::before  { background: linear-gradient(90deg, #2ecc71, #1abc9c); }
+    .card.dani::before    { background: linear-gradient(90deg, #f39c12, #e67e22); }
+
+    .card-avatar {
+      font-size: 3.5rem;
+      margin-bottom: 0.75rem;
+      display: block;
+      animation: shake 8s ease-in-out infinite;
+      animation-delay: var(--delay, 0s);
+    }
+
+    @keyframes shake {
+      0%, 85%, 100% { transform: rotate(0deg); }
+      87% { transform: rotate(-8deg); }
+      90% { transform: rotate(8deg); }
+      93% { transform: rotate(-4deg); }
+      96% { transform: rotate(4deg); }
+    }
+
+    .card h2 {
+      font-family: 'Bangers', cursive;
+      font-size: 2rem;
+      letter-spacing: 0.1em;
+      color: var(--banana);
+      margin-bottom: 0.2rem;
+    }
+
+    .card .role {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      opacity: 0.55;
+      margin-bottom: 0.85rem;
+      color: var(--leaf);
+    }
+
+    .card p {
+      font-size: 0.95rem;
+      line-height: 1.65;
+      opacity: 0.88;
+      margin-bottom: 0.65rem;
+    }
+
+    .card p:last-child { margin-bottom: 0; }
+
+    .tag {
+      display: inline-block;
+      background: rgba(244,208,63,0.12);
+      border: 1px solid rgba(244,208,63,0.3);
+      color: var(--banana);
+      border-radius: 20px;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin: 0.25rem 0.2rem 0 0;
+    }
+
+    .tag.red   { background: rgba(231,76,60,0.12); border-color: rgba(231,76,60,0.4); color: #ff8a80; }
+    .tag.blue  { background: rgba(52,152,219,0.12); border-color: rgba(52,152,219,0.4); color: #82cfff; }
+    .tag.green { background: rgba(46,204,113,0.12); border-color: rgba(46,204,113,0.4); color: #a8e6bf; }
+
+    /* Warning card for German */
+    .card.german .warning-box {
+      margin-top: 1rem;
+      background: rgba(231,76,60,0.1);
+      border: 1px solid rgba(231,76,60,0.35);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      color: #ffb3ae;
+    }
+
+    .card.german .warning-box strong {
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.3rem;
+      opacity: 0.75;
+    }
+
+    /* Fun facts section */
+    .section-title {
+      font-family: 'Bangers', cursive;
+      font-size: 2.2rem;
+      letter-spacing: 0.12em;
+      color: var(--banana);
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .facts {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .fact {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.95rem;
+      line-height: 1.55;
+      opacity: 0.88;
+    }
+
+    .fact:last-child { border-bottom: none; padding-bottom: 0; }
+    .fact:first-child { padding-top: 0; }
+
+    .fact-icon {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    /* Tier list */
+    .tier-list {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 3rem;
+    }
+
+    .tier-list-header {
+      background: rgba(244,208,63,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 1rem 1.5rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      opacity: 0.6;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    .tier-row {
+      padding: 0.85rem 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      font-size: 0.9rem;
+      align-items: center;
+      transition: background 0.2s;
+    }
+
+    .tier-row:hover { background: rgba(255,255,255,0.04); }
+    .tier-row:last-child { border-bottom: none; }
+
+    .tier-label {
+      font-weight: 700;
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .tier-s { color: #ffd700; }
+    .tier-a { color: #c8ff80; }
+    .tier-b { color: #80d4ff; }
+    .tier-c { color: #ffb347; }
+    .tier-d { color: #ff8080; }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      opacity: 0.4;
+      font-size: 0.85rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    footer .big { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .tier-list-header, .tier-row {
+        grid-template-columns: 80px 1fr 1fr 1fr;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Floating background leaves -->
+<div class="leaf-bg">
+  <span style="left:5%;animation-duration:14s;animation-delay:0s;font-size:1.5rem">🍌</span>
+  <span style="left:15%;animation-duration:18s;animation-delay:3s">🌿</span>
+  <span style="left:28%;animation-duration:12s;animation-delay:6s;font-size:1.5rem">🐒</span>
+  <span style="left:42%;animation-duration:20s;animation-delay:1s">🍃</span>
+  <span style="left:58%;animation-duration:15s;animation-delay:8s;font-size:1.5rem">🌴</span>
+  <span style="left:70%;animation-duration:17s;animation-delay:4s">🍌</span>
+  <span style="left:85%;animation-duration:11s;animation-delay:9s;font-size:1.5rem">🐒</span>
+  <span style="left:92%;animation-duration:22s;animation-delay:2s">🌿</span>
+</div>
+
+<div class="wrapper">
+
+  <!-- Header -->
+  <header>
+    <div class="monkey-row">🐒🐒🐒🐒</div>
+    <h1>Los Macacos</h1>
+    <p class="tagline">"A group that definitely should have a parental advisory sticker"</p>
+  </header>
+
+  <!-- Warning banner -->
+  <div class="banner">
+    <span class="icon">⚠️</span>
+    <span>Official disclaimer: No monkeys were harmed in the making of this group. Several brain cells, however, did not survive. This page is rated PG-13 for <em>mild stupidity and group chat irresponsibility</em>.</span>
+  </div>
+
+  <!-- Member Cards -->
+  <div class="cards">
+
+    <!-- German -->
+    <div class="card german">
+      <span class="card-avatar" style="--delay:0.2s">🫦</span>
+      <h2>German</h2>
+      <div class="role">Chief Flirt Officer · Est. Birth</div>
+      <p>German operates under the belief that every person he encounters is secretly waiting for him to shoot his shot. He has not yet been proven right. He has also not let this stop him.</p>
+      <p>His cologne budget exceeds his rent. He has "networking" listed as a hobby, which in his case means talking to strangers at bars for approximately 45 minutes before getting their number and never texting them.</p>
+      <div class="warning-box">
+        <strong>🚨 Behavioral advisory</strong>
+        Keep German away from: weddings, house parties, his own reflection, anyone who makes eye contact for longer than 1.5 seconds, and waitresses named Maria (incident of 2022 still unresolved).
+      </div>
+      <div style="margin-top:0.85rem">
+        <span class="tag red">🕵️ Serial Winger</span>
+        <span class="tag red">💬 DMs Permanently Open</span>
+        <span class="tag">📱 Left on Read Champion</span>
+      </div>
+    </div>
+
+    <!-- Kenneth -->
+    <div class="card kenneth">
+      <span class="card-avatar" style="--delay:0.5s">🧠</span>
+      <h2>Kenneth</h2>
+      <div class="role">Self-Appointed Group Intellectual · Disputed</div>
+      <p>Kenneth has an opinion on everything and has never once been asked for it. He will explain the geopolitical implications of your sandwich choice if you give him even a sliver of an opening.</p>
+      <p>His text messages arrive in paragraphs. The group chat notification settings have been muted by all three other members. He thinks it's a network issue.</p>
+      <div style="margin-top:0.85rem">
+        <span class="tag blue">📖 Reads Wikipedia for Fun</span>
+        <span class="tag blue">🎙️ Unsolicited Podcaster</span>
+        <span class="tag">🤓 "Actually..." Starter Pack</span>
+      </div>
+    </div>
+
+    <!-- Sergio -->
+    <div class="card sergio">
+      <span class="card-avatar" style="--delay:0.8s">😴</span>
+      <h2>Sergio</h2>
+      <div class="role">Professional Latecomer · Unapologetic</div>
+      <p>Sergio arrives to everything between 20 and 45 minutes late. He has never once offered an explanation that was credible. "Traffic" — he lives 5 minutes away. "Phone died" — the phone was in his hand.</p>
+      <p>Despite this, he somehow always ends up eating the most, paying the least, and leaving first. Historians are baffled.</p>
+      <div style="margin-top:0.85rem">
+        <span class="tag green">⏰ -35 min Average ETA</span>
+        <span class="tag green">🍕 First at the Food</span>
+        <span class="tag">🏃 Last to Arrive, First to Leave</span>
+      </div>
+    </div>
+
+    <!-- Dani -->
+    <div class="card dani">
+      <span class="card-avatar" style="--delay:1.1s">🎭</span>
+      <h2>Dani</h2>
+      <div class="role">Chaos Coordinator · Accidental Leader</div>
+      <p>Dani says "I don't care, whatever you guys want" and then silently judges every single decision that gets made. He has strong opinions about everything and will only share them after it's too late to change plans.</p>
+      <p>Somehow the most competent person here, which he finds deeply uncomfortable and never mentions publicly.</p>
+      <div style="margin-top:0.85rem">
+        <span class="tag">🗳️ Passive Veto Holder</span>
+        <span class="tag">🤫 Secretly Has Standards</span>
+        <span class="tag">🎯 Plan B Is Always His</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Tier List -->
+  <h2 class="section-title">📊 Official Macaco Tier List</h2>
+  <div class="tier-list">
+    <div class="tier-list-header">
+      <span>Tier</span>
+      <span>Category</span>
+      <span>Winner</span>
+      <span>Reason</span>
+    </div>
+
+    <div class="tier-row">
+      <span class="tier-label tier-s">S</span>
+      <span>Showing up on time</span>
+      <span>Kenneth</span>
+      <span>Has nothing else to do</span>
+    </div>
+    <div class="tier-row">
+      <span class="tier-label tier-a">A</span>
+      <span>Cooking</span>
+      <span>Dani</span>
+      <span>Only one who tried once</span>
+    </div>
+    <div class="tier-row">
+      <span class="tier-label tier-b">B</span>
+      <span>Confidence</span>
+      <span>German</span>
+      <span>Terrifying levels of it</span>
+    </div>
+    <div class="tier-row">
+      <span class="tier-label tier-c">C</span>
+      <span>Paying back money</span>
+      <span>Sergio</span>
+      <span>Claims he never borrowed any</span>
+    </div>
+    <div class="tier-row">
+      <span class="tier-label tier-d">D</span>
+      <span>Reading the room</span>
+      <span>German</span>
+      <span>(He's on this tier twice)</span>
+    </div>
+    <div class="tier-row">
+      <span class="tier-label tier-d">F</span>
+      <span>Group chat replies</span>
+      <span>All of them</span>
+      <span>"Seen" since Thursday</span>
+    </div>
+  </div>
+
+  <!-- Fun Facts -->
+  <h2 class="section-title">🍌 Did You Know?</h2>
+  <div class="facts">
+    <div class="fact">
+      <span class="fact-icon">🔬</span>
+      <span>Scientists studying the group chat discovered that a message sent on Monday has a <strong>7% chance</strong> of receiving a reply before the weekend. The other 93% are simply acknowledged with a thumbs-up emoji three days later.</span>
+    </div>
+    <div class="fact">
+      <span class="fact-icon">📍</span>
+      <span>In the history of the Macacos, a plan has been <strong>successfully executed as originally described</strong> exactly zero (0) times. The current record for "number of times a plan changed before anyone arrived" stands at 7, set in April 2023.</span>
+    </div>
+    <div class="fact">
+      <span class="fact-icon">💸</span>
+      <span>The cumulative amount of money borrowed within the group and "forgotten about" is estimated at <strong>several hundred euros</strong>. A formal audit has been requested. The request was left on read.</span>
+    </div>
+    <div class="fact">
+      <span class="fact-icon">🎯</span>
+      <span>German has made <strong>at least 12 bold claims</strong> about "this is the year I get my life together." The year is unspecified. So is the method. The energy is, however, excellent.</span>
+    </div>
+    <div class="fact">
+      <span class="fact-icon">🏆</span>
+      <span>Dani has won <strong>every single argument</strong> in the group, despite never openly engaging in one. He simply waits. He has infinite patience. It is honestly a bit unsettling.</span>
+    </div>
+    <div class="fact">
+      <span class="fact-icon">🍕</span>
+      <span>Sergio has ordered food for everyone and "forgotten" his wallet a statistically improbable <strong>100% of the time</strong>. Mathematicians have proposed he be studied.</span>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <span class="big">🐒🐒🐒🐒</span>
+    <p>Los Macacos · Together since forever, organized since never.</p>
+    <p style="margin-top:0.4rem">Made with love, mild chaos, and zero adult supervision.</p>
+  </footer>
+
+</div>
+
+</body>
+</html>
