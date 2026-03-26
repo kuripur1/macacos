@@ -8,23 +8,23 @@
     @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;700;900&display=swap');
 
     :root {
-      --jungle: #2d6a4f;
+      --jungle: #1a2f5e;
       --banana: #f4d03f;
-      --bark: #6b4226;
-      --leaf: #52b788;
-      --cream: #fefae0;
-      --shadow: rgba(0,0,0,0.15);
+      --bark: #0d1b3e;
+      --leaf: #7eb8f7;
+      --cream: #e8f0ff;
+      --shadow: rgba(0,0,0,0.25);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Nunito', sans-serif;
-      background-color: #1a3a2a;
+      background-color: #0d1b3e;
       background-image:
-        radial-gradient(circle at 20% 50%, rgba(82,183,136,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 20% 50%, rgba(78,130,220,0.1) 0%, transparent 50%),
         radial-gradient(circle at 80% 20%, rgba(244,208,63,0.06) 0%, transparent 40%);
-      color: #fefae0;
+      color: #e8f0ff;
       min-height: 100vh;
       overflow-x: hidden;
     }
@@ -91,13 +91,13 @@
       opacity: 0.75;
       font-style: italic;
       margin-top: 0.5rem;
-      color: var(--leaf);
+      color: #7eb8f7;
     }
 
     /* Warning banner */
     .banner {
       background: var(--banana);
-      color: #1a3a2a;
+      color: #0d1b3e;
       border-radius: 12px;
       padding: 1rem 1.5rem;
       margin: 1.5rem 0 2.5rem;
@@ -186,7 +186,7 @@
       letter-spacing: 0.12em;
       opacity: 0.55;
       margin-bottom: 0.85rem;
-      color: var(--leaf);
+      color: #7eb8f7;
     }
 
     .card p {
@@ -319,6 +319,45 @@
     .tier-b { color: #80d4ff; }
     .tier-c { color: #ffb347; }
     .tier-d { color: #ff8080; }
+
+    /* YouTube video section */
+    .video-section {
+      margin-bottom: 3rem;
+    }
+
+    .video-label {
+      text-align: center;
+      font-size: 0.95rem;
+      opacity: 0.75;
+      font-style: italic;
+      margin-bottom: 1.25rem;
+      color: #7eb8f7;
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    .video-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+    }
+
+    .video-caption {
+      text-align: center;
+      font-size: 0.85rem;
+      opacity: 0.55;
+      margin-top: 1rem;
+    }
 
     /* Footer */
     footer {
@@ -509,6 +548,22 @@
       <span class="fact-icon">🍕</span>
       <span>Sergio has ordered food for everyone and "forgotten" his wallet a statistically improbable <strong>100% of the time</strong>. Mathematicians have proposed he be studied.</span>
     </div>
+  </div>
+
+  <!-- YouTube Video -->
+  <h2 class="section-title">🎬 The Macaco Anthem</h2>
+  <div class="video-section">
+    <div class="video-label">Because every great group deserves a theme song. Play this at maximum volume. Neighbors be damned.</div>
+    <div class="video-wrapper">
+      <iframe
+        src="https://www.youtube.com/embed/Mi2cJ8kNeQ4?rel=0"
+        title="Macaco - YouTube"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+    </div>
+    <div class="video-caption">🐒 Warning: Side effects include uncontrollable dancing, group chat spam, and an overwhelming desire to call Sergio (who will not pick up).</div>
   </div>
 
   <!-- Footer -->
